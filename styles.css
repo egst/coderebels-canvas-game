@@ -1,0 +1,42 @@
+* {
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+button {
+    border: none;
+    padding: 4px 16px;
+}
+
+.button-pressed {
+    background-color: black;
+    color: white;
+}
+
+.stat-box {
+    background-color: cornflowerblue;
+    padding: 4px 16px;
+}
+
+#toolbar {
+    background-color: #e66465;
+    display: flex;
+    /* Prvky zarovnavame zleva doprava. */
+    flex-direction: row;
+    /* Prvky zarovnavame na stred kolem jejich osy (ta vede zleva doprava). */
+    align-items: center;
+    /* Prvky zarovnavame na stred podel jejich osy (ta vede zleva doprava). */
+    justify-content: center;
+    /* Mezera mezi prvky. */
+    gap: 16px;
+    /* Mezera uvnitr toolbaru (kolem jeho prvku). */
+    padding: 8px;
+}
+
+#game-canvas {
+    background-color: white;
+}
+
+body {
+    background-color: #222;
+}
