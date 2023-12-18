@@ -81,10 +81,26 @@ canvasRenderers.push((context) => {
 })
 
 // Rendering player:
-const image = new Image
-image.src = 'assets/jake.png'
+const playerImage = new Image
+playerImage.src = 'assets/jake.png'
 canvasRenderers.push((context) => {
-    context.drawImage(image, playerX, playerY)
+    context.drawImage(playerImage, playerX, playerY)
+})
+
+let snowFlakePosition = 0
+//const slowFlakePositions = []
+
+const createSnowflake = () => {
+    snowFlakePosition = Math.random()
+}
+
+setInterval(createSnowflake, 1000)
+
+// Rendering snowflakes:
+const snowflakeImage = new Image
+snowflakeImage.src = 'assets/snowflake.png'
+canvasRenderers.push(context => {
+    context.drawImage(snowflakeImage, snowFlakePosition * context.canvas.width, 100)
 })
 
 const handlePlayer = () => {
