@@ -87,20 +87,52 @@ canvasRenderers.push((context) => {
     context.drawImage(playerImage, playerX, playerY)
 })
 
-let snowFlakePosition = 0
-//const slowFlakePositions = []
+let snowFlakePositionX = 0
+let snowFlakePositionY = 0
 
-const createSnowflake = () => {
-    snowFlakePosition = Math.random()
+const createSnowFlake = () => {
+    snowFlakePositionX = Math.random()
+    snowFlakePositionY = 0
 }
 
-setInterval(createSnowflake, 1000)
+const snowFlakeWidth  = 20
+const snowFlakeHeight = 20
+const playerWidth     = 50
+const playerHeight    = 50
+
+const handleSnowflakes = () => {
+    if (snowFlakePositionY >= 1) { // Uz to dopadlo na zem.
+        createSnowFlake()
+    } else { // Jeste to pada.
+        snowFlakePositionY += 0.01
+
+        // Kdyz se dotyka vlocka hrace:
+        if (snowFlakePositionX < playerX + playerWidth &&
+            snowFlakePositionX + snowFlakeWidth > playerX &&
+            snowFlakePositionY < playerY + playerHeight &&
+            snowFlakePositionY + snowFlakeHeight > playerY
+        ) {
+            // Pridame XP:
+            xp += 2
+
+            // Znicime tuto vlocku
+            // a vytvorime novou:
+            createSnowFlake()
+        }
+    }
+}
+
+setInterval(handleSnowflakes, 50)
 
 // Rendering snowflakes:
 const snowflakeImage = new Image
 snowflakeImage.src = 'assets/snowflake.png'
 canvasRenderers.push(context => {
-    context.drawImage(snowflakeImage, snowFlakePosition * context.canvas.width, 100)
+    context.drawImage(
+        snowflakeImage,
+        snowFlakePositionX * context.canvas.width,
+        snowFlakePositionY * context.canvas.height
+    )
 })
 
 const handlePlayer = () => {
