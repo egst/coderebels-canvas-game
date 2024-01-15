@@ -101,16 +101,18 @@ const playerWidth     = 50
 const playerHeight    = 50
 
 const handleSnowflakes = () => {
+    const canvas = document.querySelector('#game-canvas')
+
     if (snowFlakePositionY >= 1) { // Uz to dopadlo na zem.
         createSnowFlake()
     } else { // Jeste to pada.
-        snowFlakePositionY += 0.01
+        snowFlakePositionY += 0.02
 
         // Kdyz se dotyka vlocka hrace:
-        if (snowFlakePositionX < playerX + playerWidth &&
-            snowFlakePositionX + snowFlakeWidth > playerX &&
-            snowFlakePositionY < playerY + playerHeight &&
-            snowFlakePositionY + snowFlakeHeight > playerY
+        if (snowFlakePositionX * canvas.width < playerX + playerWidth &&
+            snowFlakePositionX * canvas.width + snowFlakeWidth > playerX &&
+            snowFlakePositionY * canvas.height < playerY + playerHeight &&
+            snowFlakePositionY * canvas.height + snowFlakeHeight > playerY
         ) {
             // Pridame XP:
             xp += 2
@@ -122,7 +124,9 @@ const handleSnowflakes = () => {
     }
 }
 
-setInterval(handleSnowflakes, 50)
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(handleSnowflakes, 50)
+})
 
 // Rendering snowflakes:
 const snowflakeImage = new Image
