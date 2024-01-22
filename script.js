@@ -35,12 +35,16 @@ const handlePauseButton = () => {
     })
 }
 
+const updateXpCounter = () => {
+    // Najdeme "XP" counter.
+    const xpCounter = document.querySelector('#xp-counter')
+    // Do XP counteru vypiseme aktualni pocet XP.
+    xpCounter.innerText = xp + ' XP'
+}
+
 const handleFreeXpButton = () => {
     // Najdeme "XP" tlacitko.
     const freeXpButton = document.querySelector('#free-xp-button')
-
-    // Najdeme "XP" counter.
-    const xpCounter = document.querySelector('#xp-counter')
 
     // Na "XP" tlacitku cekame, nez uzivatel klikne.
     freeXpButton.addEventListener('click', () => {
@@ -53,9 +57,6 @@ const handleFreeXpButton = () => {
             alert('stop being so greedy! imma steal all your XP now.')
             xp = 0
         }
-
-        // Do XP counteru vypiseme aktualni pocet XP.
-        xpCounter.innerText = xp + ' XP'
     })
 }
 
@@ -70,6 +71,8 @@ const drawCanvasFrame = () => {
     for (const renderer of canvasRenderers) {
         renderer(context)
     }
+
+    updateXpCounter()
 
     requestAnimationFrame(drawCanvasFrame)
 }
@@ -87,6 +90,14 @@ canvasRenderers.push((context) => {
     context.drawImage(playerImage, playerX, playerY)
 })
 
+const playerWidth  = 50
+const playerHeight = 50
+
+// Snowflakes:
+
+const snowFlakeWidth  = 20
+const snowFlakeHeight = 20
+
 let snowFlakePositionX = 0
 let snowFlakePositionY = 0
 
@@ -94,11 +105,6 @@ const createSnowFlake = () => {
     snowFlakePositionX = Math.random()
     snowFlakePositionY = 0
 }
-
-const snowFlakeWidth  = 20
-const snowFlakeHeight = 20
-const playerWidth     = 50
-const playerHeight    = 50
 
 const handleSnowflakes = () => {
     const canvas = document.querySelector('#game-canvas')
@@ -116,6 +122,7 @@ const handleSnowflakes = () => {
         ) {
             // Pridame XP:
             xp += 2
+            // update xp counter
 
             // Znicime tuto vlocku
             // a vytvorime novou:
@@ -124,9 +131,47 @@ const handleSnowflakes = () => {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    setInterval(handleSnowflakes, 50)
-})
+// END Snowflakes
+
+// Icicles:
+
+const icicleWidth  = 20
+const icicleHeight = 56
+
+let iciclePositionX = 0
+let iciclePositionY = 0
+
+const createIcicle = () => {
+    iciclePositionX = Math.random()
+    iciclePositionY = 0
+}
+
+const handleIcicles = () => {
+    const canvas = document.querySelector('#game-canvas')
+
+    if (iciclePositionY >= 1) { // Uz to dopadlo na zem.
+        createIcicle()
+    } else { // Jeste to pada.
+        iciclePositionY += 0.02
+
+        // Kdyz se dotyka vlocka hrace:
+        if (iciclePositionX * canvas.width < playerX + playerWidth &&
+            iciclePositionX * canvas.width + icicleWidth > playerX &&
+            iciclePositionY * canvas.height < playerY + playerHeight &&
+            iciclePositionY * canvas.height + icicleHeight > playerY
+        ) {
+            // Pridame XP:
+            xp += 2
+            // update xp counter
+
+            // Znicime tuto vlocku
+            // a vytvorime novou:
+            createIcicle()
+        }
+    }
+}
+
+// END Icicles
 
 // Rendering snowflakes:
 const snowflakeImage = new Image
@@ -139,22 +184,29 @@ canvasRenderers.push(context => {
     )
 })
 
+// Rendering icicles:
+const icicleImage = new Image
+icicleImage.src = 'assets/icicle.png'
+canvasRenderers.push(context => {
+    context.drawImage(
+        icicleImage,
+        iciclePositionX * context.canvas.width,
+        iciclePositionY * context.canvas.height
+    )
+})
+
 const handlePlayer = () => {
     document.addEventListener('keydown', (event) => {
         if (event.key == 'ArrowRight') {
-            console.log('go right')
             playerX += 20
         }
         if (event.key == 'ArrowLeft') {
-            console.log('go left')
             playerX -= 20
         }
         if (event.key == 'ArrowUp') {
-            console.log('go down')
             playerY -= 20
         }
         if (event.key == 'ArrowDown') {
-            console.log('go down')
             playerY += 20
         }
     })
@@ -173,4 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
     handlePlayer()
     resizeCanvas()
     requestAnimationFrame(drawCanvasFrame)
+    setInterval(handleSnowflakes, 30)
+    setInterval(handleIcicles, 50)
 })
