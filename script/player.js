@@ -1,6 +1,8 @@
-let xp = 100
-let hp = 100
-let playerX = 0
+import {canvasRenderers} from '/script/rendering.js'
+
+export let xp = 100
+export let hp = 100
+export let playerX = 0
 export let playerY = 0
 
 export const playerWidth  = 50
@@ -23,4 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 });
 
-// TODO: Move the renderer here.
+const playerImage = new Image
+playerImage.src = 'assets/jake.png'
+canvasRenderers.push((context) => {
+    context.drawImage(playerImage, playerX, playerY)
+})
