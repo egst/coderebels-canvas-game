@@ -1,13 +1,6 @@
-'use strict'
+import {playerWidth} from 'script/player.js'
 
-// Stavova promenna, ktera si pamatuje, jestli je hra pausnuta, nebo ne.
-// True znamena "ano, hra je pausnuta", false znamena "ne, hra bezi".
 let gamePaused = true
-
-let xp = 100
-
-let playerX = 0
-let playerY = 0
 
 const handlePauseButton = () => {
     // Najdeme "pause" tlacitko.
@@ -84,14 +77,12 @@ canvasRenderers.push((context) => {
 })
 
 // Rendering player:
+// TODO: Move to player.js module.
 const playerImage = new Image
 playerImage.src = 'assets/jake.png'
 canvasRenderers.push((context) => {
     context.drawImage(playerImage, playerX, playerY)
 })
-
-const playerWidth  = 50
-const playerHeight = 50
 
 // Snowflakes:
 
@@ -195,23 +186,6 @@ canvasRenderers.push(context => {
     )
 })
 
-const handlePlayer = () => {
-    document.addEventListener('keydown', (event) => {
-        if (event.key == 'ArrowRight') {
-            playerX += 20
-        }
-        if (event.key == 'ArrowLeft') {
-            playerX -= 20
-        }
-        if (event.key == 'ArrowUp') {
-            playerY -= 20
-        }
-        if (event.key == 'ArrowDown') {
-            playerY += 20
-        }
-    })
-}
-
 const resizeCanvas = () => {
     const canvas = document.querySelector('#game-canvas')
     canvas.width = canvas.parentNode.clientWidth
@@ -222,7 +196,6 @@ window.addEventListener('resize', resizeCanvas)
 document.addEventListener('DOMContentLoaded', () => {
     handlePauseButton()
     handleFreeXpButton()
-    handlePlayer()
     resizeCanvas()
     requestAnimationFrame(drawCanvasFrame)
     setInterval(handleSnowflakes, 30)
