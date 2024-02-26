@@ -1,5 +1,5 @@
 import {canvasRenderers} from '/script/rendering.js'
-import {xp, playerX, playerY, playerWidth, playerHeight} from '/script/player.js'
+import {player} from '/script/player.js'
 
 const icicleWidth  = 20
 const icicleHeight = 56
@@ -22,15 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             iciclePositionY += 0.02
     
             // Kdyz se dotyka vlocka hrace:
-            if (iciclePositionX * canvas.width < playerX + playerWidth &&
-                iciclePositionX * canvas.width + icicleWidth > playerX &&
-                iciclePositionY * canvas.height < playerY + playerHeight &&
-                iciclePositionY * canvas.height + icicleHeight > playerY
+            if (iciclePositionX * canvas.width < player.x + player.width &&
+                iciclePositionX * canvas.width + icicleWidth > player.x &&
+                iciclePositionY * canvas.height < player.y + player.height &&
+                iciclePositionY * canvas.height + icicleHeight > player.y
             ) {
-                // Pridame XP:
-                // TODO
-                //xp += 2
-                // update xp counter
+                // Odebereme HP:
+                player.hp -= 2
     
                 // Znicime tuto vlocku
                 // a vytvorime novou:

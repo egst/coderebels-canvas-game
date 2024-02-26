@@ -1,5 +1,5 @@
 import {canvasRenderers} from '/script/rendering.js'
-import {xp, playerX, playerY, playerWidth, playerHeight} from '/script/player.js'
+import {player} from '/script/player.js'
 
 const snowFlakeWidth  = 20
 const snowFlakeHeight = 20
@@ -22,15 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
             snowFlakePositionY += 0.02
 
             // Kdyz se dotyka vlocka hrace:
-            if (snowFlakePositionX * canvas.width < playerX + playerWidth &&
-                snowFlakePositionX * canvas.width + snowFlakeWidth > playerX &&
-                snowFlakePositionY * canvas.height < playerY + playerHeight &&
-                snowFlakePositionY * canvas.height + snowFlakeHeight > playerY
+            if (snowFlakePositionX * canvas.width < player.x + player.width &&
+                snowFlakePositionX * canvas.width + snowFlakeWidth > player.x &&
+                snowFlakePositionY * canvas.height < player.y + player.height &&
+                snowFlakePositionY * canvas.height + snowFlakeHeight > player.y
             ) {
                 // Pridame XP:
-                // TODO
-                //xp += 2
-                // update xp counter
+                player.xp += 2
 
                 // Znicime tuto vlocku
                 // a vytvorime novou:
