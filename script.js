@@ -1,4 +1,3 @@
-import '/script/rendering.js'
 import '/script/background.js'
 import '/script/player.js'
 import '/script/snowflakes.js'

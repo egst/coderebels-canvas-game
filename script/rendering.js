@@ -1,13 +1,16 @@
-import {xp} from '/script/player.js'
+// TODO
+//import {xp} from '/script/player.js'
 
 export const canvasRenderers = [];
 
+/*
 const updateXpCounter = () => {
     // Najdeme "XP" counter.
     const xpCounter = document.querySelector('#xp-counter')
     // Do XP counteru vypiseme aktualni pocet XP.
     xpCounter.innerText = xp + ' XP'
 }
+*/
 
 const drawCanvasFrame = () => {
     const canvas  = document.querySelector('#game-canvas')
@@ -17,7 +20,7 @@ const drawCanvasFrame = () => {
         renderer(context)
     }
 
-    updateXpCounter()
+    //updateXpCounter()
 
     requestAnimationFrame(drawCanvasFrame)
 }

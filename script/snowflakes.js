@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 snowFlakePositionY * canvas.height + snowFlakeHeight > playerY
             ) {
                 // Pridame XP:
-                xp += 2
+                // TODO
+                //xp += 2
                 // update xp counter
 
                 // Znicime tuto vlocku

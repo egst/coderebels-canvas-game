@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 iciclePositionY * canvas.height + icicleHeight > playerY
             ) {
                 // Pridame XP:
-                xp += 2
+                // TODO
+                //xp += 2
                 // update xp counter
     
                 // Znicime tuto vlocku
